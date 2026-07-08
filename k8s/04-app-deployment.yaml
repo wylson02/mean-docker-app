@@ -21,7 +21,7 @@ spec:
             - until nc -z mysql 3306; do echo waiting for mysql; sleep 2; done
       containers:
         - name: app
-          image: TON_USERNAME_DOCKERHUB/getting-started:latest # <-- remplace TON_USERNAME_DOCKERHUB
+          image: wylson02/getting-started:latest
           imagePullPolicy: Always # important : pour toujours reprendre la dernière image poussée par la CI
           ports:
             - containerPort: 3000
