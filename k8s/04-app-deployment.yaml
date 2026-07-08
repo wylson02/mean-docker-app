@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-app
+  template:
+    metadata:
+      labels:
+        app: todo-app
+    spec:
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - until nc -z mysql 3306; do echo waiting for mysql; sleep 2; done
+      containers:
+        - name: app
+          image: TON_USERNAME_DOCKERHUB/getting-started:latest # <-- remplace TON_USERNAME_DOCKERHUB
+          imagePullPolicy: Always # important : pour toujours reprendre la dernière image poussée par la CI
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MYSQL_HOST
+              value: mysql
+            - name: MYSQL_USER
+              value: root
+            - name: MYSQL_DB
+              value: todos
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_ROOT_PASSWORD

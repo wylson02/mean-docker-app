@@ -1,0 +1,38 @@
+services:
+  app:
+    image: getting-started
+    restart: always #unless-stopped
+    container_name: app
+    build:
+      context: . # dossier courant contenant le fichier Dockerfile
+      dockerfile: Dockerfile # chemin du fichier Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      MYSQL_HOST: mysql # nom du service mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: todos
+    depends_on:
+      mysql:
+        condition: service_healthy
+      # - mysql
+
+  mysql: # nom du service = alias réseau du conteneur
+    image: mysql:8.0
+    restart: always #unless-stopped
+    container_name: mysql
+    volumes:
+      - todo-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todos
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+volumes:
+  todo-mysql-data:

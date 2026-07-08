@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app
+spec:
+  type: NodePort # accessible depuis ta machine, équivalent du "3000:3000" du compose
+  selector:
+    app: todo-app
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30000 # -> http://localhost:30000
