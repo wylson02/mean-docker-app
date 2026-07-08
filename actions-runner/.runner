@@ -1,0 +1,11 @@
+﻿{
+  "agentId": 21,
+  "agentName": "WYLSON",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelinesghubeus9.actions.githubusercontent.com/W7iCwNBbekAqULxMCMPLdGPPuthi2vyrnvrIloJ7C0qJ06MAqM/",
+  "gitHubUrl": "https://github.com/wylson02/mean-docker-app",
+  "workFolder": "_work",
+  "useV2Flow": true,
+  "serverUrlV2": "https://broker.actions.githubusercontent.com/"
+}
