@@ -25,6 +25,13 @@ spec:
           imagePullPolicy: Always # important : pour toujours reprendre la dernière image poussée par la CI
           ports:
             - containerPort: 3000
+          resources:
+            requests:
+              cpu: "100m" # l'HPA calcule le % de charge par rapport à cette valeur
+              memory: "128Mi"
+            limits:
+              cpu: "300m"
+              memory: "256Mi"
           env:
             - name: MYSQL_HOST
               value: mysql
